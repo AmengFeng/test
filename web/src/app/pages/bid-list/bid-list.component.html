@@ -1,0 +1,96 @@
+<nz-card nzTitle="我的投标">
+  <nz-card-tab>
+    <nz-tabset nzSize="large" [(nzSelectedIndex)]="modeIndex">
+      <nz-tab nzTitle="我投出的"></nz-tab>
+      <nz-tab nzTitle="我收到的"></nz-tab>
+    </nz-tabset>
+  </nz-card-tab>
+  <nz-table #bidTable [nzData]="modeIndex === 0 ? sent : received">
+    <thead>
+      <tr>
+        <th>{{ modeIndex === 0 ? "需求方" : "应标人" }}</th>
+        <th>需求标题</th>
+        <th>视频截图</th>
+        <th>应标价格</th>
+        <th>状态</th>
+        <th>创建时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bid of bidTable.data">
+        <td>
+          <div
+            [routerLink]="[
+              '/home',
+              'user',
+              modeIndex === 0 ? bid.demand?.creator?.id : bid.bidder?.id
+            ]"
+            (click)="$event.stopPropagation()"
+            style="cursor: pointer"
+          >
+            <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a nz-button nzType="link">{{
+              modeIndex === 0 ? bid.demand?.creator?.name : bid.bidder?.name
+            }}</a>
+          </div>
+        </td>
+        <td>
+          <a [routerLink]="['/home', 'demand-detail', bid.demand.id]">{{
+            bid.demand.title
+          }}</a>
+        </td>
+        <td>
+          <a nz-button nzType="link" (click)="preview(bid.cover_addrs)"
+            >查看截图</a
+          >
+        </td>
+        <td>{{ bid.price }}￥</td>
+        <td>
+          {{ bid.status }}
+        </td>
+        <td>{{ bid.created_time | date : "YYYY-MM-dd HH:mm:ss" }}</td>
+        @if (modeIndex ===0) {
+        <td>
+          <button
+            nz-popconfirm
+            nzPopconfirmTitle="是否确认要撤标"
+            (nzOnConfirm)="reject(bid)"
+            nz-button
+            nzType="primary"
+            nzDanger
+            [disabled]="bid.status !== '已创建'"
+          >
+            撤标
+          </button>
+        </td>
+        } @else {
+        <td>
+          <button
+            nz-popconfirm
+            nzType="primary"
+            (nzOnConfirm)="confirmBid(bid)"
+            nzPopconfirmTitle="确认中标？选中后其他应标将作废"
+            nz-button
+            [disabled]="bid.status !== '已创建'"
+          >
+            中标
+          </button>
+          @if(bid.status === '已确认') {
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            nz-button
+            nzType="link"
+            href="{{ serverUrl }}{{ bid.video_addr }}"
+            download="{{ serverUrl }}{{ bid.video_addr }}"
+            target="_blank"
+            >下载视频</a
+          >
+          }
+        </td>
+        }
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

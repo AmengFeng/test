@@ -1,0 +1,95 @@
+<!-- <pre>{{ validateForm.value | json }}</pre> -->
+<form nz-form [formGroup]="validateForm" [nzAutoTips]="autoTips">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>视频标题</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <input nz-input formControlName="title" placeholder="请输入视频标题" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>上传封面</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <nz-upload
+        nzAction="{{ serverUrl }}/video/upload_file/"
+        nzListType="picture-card"
+        [(nzFileList)]="coverFileLIst"
+        (nzChange)="onChange($event, 'cover_addr')"
+        nzAccept="image/png, image/jpeg"
+        [nzShowUploadList]="{
+          showPreviewIcon: false,
+          showDownloadIcon: false,
+          showRemoveIcon: true
+        }"
+        [nzShowButton]="coverFileLIst.length === 0"
+      >
+        <div>
+          <span nz-icon nzType="plus"></span>
+          <div style="margin-top: 8px">上传封面</div>
+        </div>
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>上传视频</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <nz-upload
+        nzAction="{{ serverUrl }}/video/upload_file/"
+        nzListType="picture-card"
+        [(nzFileList)]="videoFileList"
+        (nzChange)="onChange($event, 'video_addr')"
+        nzAccept=".mp4"
+        [nzShowUploadList]="{
+          showPreviewIcon: false,
+          showDownloadIcon: false,
+          showRemoveIcon: true
+        }"
+        [nzShowButton]="videoFileList.length === 0"
+      >
+        <div>
+          <span nz-icon nzType="plus"></span>
+          <div style="margin-top: 8px">上传视频</div>
+        </div>
+      </nz-upload>
+      <!-- <button
+        nz-button
+        type="button"
+        (click)="generateDesc()"
+        nzType="primary"
+        style="width: 100%"
+        [disabled]="!videoFile"
+        [nzLoading]="generateDescLoading"
+      >
+        生成简介
+      </button> -->
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>视频简介</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <textarea
+        nz-input
+        formControlName="brief"
+        placeholder="视频简介"
+        [nzAutosize]="{ minRows: 4 }"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">视频标签</nz-form-label>
+    <nz-form-control [nzSpan]="18">
+      <nz-select
+        formControlName="tags"
+        nzMode="tags"
+        [nzTokenSeparators]="[',']"
+        nzPlaceHolder="请输入标签"
+        [nzMaxMultipleCount]="10"
+      >
+        <nz-option
+          *ngFor="let option of presetTags"
+          [nzLabel]="option.label"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

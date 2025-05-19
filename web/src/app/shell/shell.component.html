@@ -1,0 +1,96 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzTheme="light"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a routerLink="/home">
+        <img src="/assets/logo.png" alt="logo" />
+        <h1>{{ title }}</h1>
+      </a>
+    </div>
+    <ul
+      nz-menu
+      nzTheme="light"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+      *ngIf="role"
+    >
+      <li nz-menu-item nzMatchRouter *ngFor="let menu of menus[role]">
+        <span nz-icon [nzType]="menu.icon"></span>
+        <span>
+          <a [routerLink]="menu.url" [queryParams]="menu.queryParams">{{
+            menu.name
+          }}</a></span
+        >
+      </li>
+      <li nz-menu-item (click)="logOut()">退出登录</li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header
+      style="
+        display: flex;
+        justify-content: space-between;
+        background-color: #fff;
+      "
+    >
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <span
+            class="trigger"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></span>
+        </span>
+      </div>
+      @if (userId) {
+      <div class="publishBar">
+        <button nz-button nzGhost nzType="primary" (click)="publishDemand()">
+          <span nz-icon nzType="plus"></span>发布需求
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzGhost nzType="primary" (click)="uploadVideo()">
+          <span nz-icon nzType="upload"></span>上传视频
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        欢迎您，{{ name }}
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-avatar nzIcon="user" style="cursor: pointer"></nz-avatar>
+      </div>
+      } @else {
+      <div class="loginBar">
+        <button
+          nz-button
+          nzType="primary"
+          nzGhost
+          nzShape="round"
+          (click)="toLogin()"
+        >
+          登录
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button
+          nz-button
+          nzType="primary"
+          nzGhost
+          nzShape="round"
+          (click)="toLogin()"
+        >
+          注册
+        </button>
+      </div>
+      }
+    </nz-header>
+    <nz-content>
+      <div class="inner-content" style="overflow: auto">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

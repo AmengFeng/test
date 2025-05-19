@@ -1,0 +1,62 @@
+<nz-card
+  style="width: 100%; min-width: 400px"
+  nzHoverable
+  [nzCover]="cover"
+  [nzActions]="
+    readOnly ? [user, demandLocation] : [editTpl, deleteTpl, demandLocation]
+  "
+  (click)="toDetail()"
+>
+  <ng-template #cover>
+    <img
+      nz-image
+      style="width: 100%; aspect-ratio: 16 / 9"
+      alt="封面"
+      nzSrc="{{ serverUrl }}{{ video.cover_addr }}"
+      nzFallback="/assets/杂志插图怒火.png"
+      nzDisablePreview
+    />
+  </ng-template>
+  <ng-template #user>
+    <div routerLink="/home/user/{{ video.creator?.id }}">
+      <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
+      <nz-divider nzType="vertical"></nz-divider>
+      {{ video.creator?.name }}
+    </div>
+  </ng-template>
+  <ng-template #demandLocation>
+    <div nz-flex nzJustify="center" nzAlign="center" nzGap="0.5rem">
+      <span nz-icon nzType="environment"></span>
+      <span>{{ video.creator?.location }}</span>
+    </div>
+  </ng-template>
+  <ng-template #editTpl>
+    <div (click)="update($event)">
+      <span nz-icon nzType="edit"></span>
+      <span>编辑</span>
+    </div>
+  </ng-template>
+  <ng-template #deleteTpl>
+    <div
+      (click)="$event.stopPropagation()"
+      nz-popconfirm
+      (nzOnConfirm)="delete()"
+      nzPopconfirmTitle="确认删除?"
+    >
+      <span nz-icon nzType="delete"></span>
+      <span>删除</span>
+    </div>
+  </ng-template>
+  <p [title]="video.title" style="white-space: nowrap; overflow: hidden">
+    {{ sliceTitle(video?.title) }}
+  </p>
+  <div>
+    @for (tag of video.tags; track $index) {
+    <nz-tag [nzColor]="tagColors[$index % tagColors.length]" nzMode="checkable">
+      {{ sliceTagName(tag) }}
+    </nz-tag>
+    }@empty {
+    <nz-tag>无标签</nz-tag>
+    }
+  </div>
+</nz-card>

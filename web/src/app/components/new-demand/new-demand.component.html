@@ -1,0 +1,70 @@
+<nz-spin [nzSpinning]="generateDescLoading" [nzSimple]="false" nzTip="AI生成中">
+  <form nz-form [formGroup]="validateForm" [nzAutoTips]="autoTips">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired>需求标题</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzHasFeedback>
+        <input nz-input formControlName="title" placeholder="请输入需求标题" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired>需求简介</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzHasFeedback>
+        <textarea
+          nz-input
+          formControlName="brief"
+          placeholder="请输入需求简介"
+          [nzAutosize]="{ minRows: 4 }"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired>需求详情</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzHasFeedback>
+        <button
+          nz-button
+          type="button"
+          (click)="generateDesc()"
+          nzType="primary"
+          style="width: 100%; margin-bottom: 1rem"
+          [nzLoading]="generateDescLoading"
+        >
+          AI生成需求详情
+        </button>
+        <div style="border: 1px solid #ccc">
+          <div id="editor-toolbar" style="border-bottom: 1px solid #ccc"></div>
+          <div id="editor-text-area" style="height: 500px"></div>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired>需求报价</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzHasFeedback>
+        <nz-select formControlName="price" nzPlaceHolder="请选择期望报价">
+          <nz-option
+            *ngFor="let option of presetPrices"
+            [nzLabel]="option.label"
+            [nzValue]="option.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">需求标签</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+        <nz-select
+          formControlName="tags"
+          nzMode="tags"
+          [nzTokenSeparators]="[',']"
+          nzPlaceHolder="请输入标签"
+          [nzMaxMultipleCount]="10"
+        >
+          <nz-option
+            *ngFor="let option of presetTags"
+            [nzLabel]="option.label"
+            [nzValue]="option.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-spin>

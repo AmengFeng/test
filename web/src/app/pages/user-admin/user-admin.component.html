@@ -1,0 +1,77 @@
+<nz-card nzTitle="搜索" [nzBordered]="true">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="getUser()">
+    <nz-form-item>
+      <nz-form-label>用户名 or 昵称</nz-form-label>
+      <nz-form-control>
+        <nz-input-group>
+          <input
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="searchParams.search"
+            nz-input
+            placeholder="Username"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Password!">
+        <nz-form-label>性别</nz-form-label>
+        <nz-select
+          style="width: 200px"
+          [(ngModel)]="searchParams.gender"
+          nzAllowClear
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option nzLabel="男" [nzValue]="1"></nz-option>
+          <nz-option nzLabel="女" [nzValue]="0"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary">搜索</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>
+<nz-card [nzBordered]="true" nzTitle="用户">
+  <nz-table #basicTable [nzData]="users">
+    <thead>
+      <tr>
+        <th>头像</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th *ngIf="role === 'Admin'">角色</th>
+        <th>用户名</th>
+        <th *ngIf="role === 'Admin'">密码</th>
+        <th *ngIf="role === 'Admin'">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of basicTable.data">
+        <td><nz-avatar [nzSize]="32" nzIcon="user"></nz-avatar></td>
+        <td>{{ user.name }}</td>
+        <td>{{ ["女", "男"][user.gender] }}</td>
+        <td *ngIf="role === 'Admin'">
+          <nz-select
+            style="width: 200px"
+            [(ngModel)]="user.role"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="changeRole($event, user)"
+          >
+            <nz-option nzLabel="用户" nzValue="User"></nz-option>
+            <nz-option nzLabel="管理员" nzValue="Admin"></nz-option>
+          </nz-select>
+        </td>
+        <td>{{ user.username }}</td>
+        <td *ngIf="role === 'Admin'">{{ user.password }}</td>
+        <td *ngIf="role === 'Admin'">
+          <nz-divider nzType="vertical"></nz-divider>
+          <button nz-button nzType="primary" nzDanger (click)="delete(user)">
+            删除
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

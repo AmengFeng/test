@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="header" nz-flex nzJustify="space-between" nzAlign="center">
+    <div>
+      <div nz-flex nzAlign="center">
+        <h1>{{ demand?.title }}</h1>
+        <nz-divider nzType="vertical"></nz-divider>
+        <h1 style="color: red">{{ demand?.price }}</h1>
+      </div>
+      <span nz-icon nzType="tags"></span>
+      标签：<nz-tag
+        *ngFor="let tag of demand?.tags; let i = index"
+        [nzColor]="tagColors[i % tagColors.length]"
+        nzMode="checkable"
+      >
+        {{ sliceTagName(tag) }}
+      </nz-tag>
+    </div>
+    <div>
+      <h4>发布于：{{ demand?.created_time | date : "YYYY-MM-dd HH:mm:ss" }}</h4>
+      <div nz-flex nzJustify="space-between" nzGap="1rem">
+        @if(demand?.stared_user_ids.includes(userId)) {
+        <button nz-button nzGhost nzType="primary" (click)="unstar()">
+          <span nz-icon nzType="star" nzTheme="fill"></span>取消收藏
+        </button>
+        } @else {
+        <button nz-button nzGhost nzType="primary" (click)="star()">
+          <span nz-icon nzType="star" nzTheme="outline"></span>收藏
+        </button>
+        } @if(demand?.can_bid) {
+        <button nz-button nzGhost nzType="primary" (click)="bid()">
+          <span nz-icon nzType="aim" nzTheme="outline"></span>应标
+        </button>
+        }@else {
+        <button nz-button nzGhost nzType="primary" disabled>
+          <span nz-icon nzType="aim" nzTheme="outline"></span>已中标
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div nz-flex>
+    <div class="detail" style="width: 70%">
+      <h2>需求简介</h2>
+      {{ demand?.brief }}
+      <nz-divider nzText="需求详情"></nz-divider>
+      <div [innerHTML]="demand?.description"></div>
+    </div>
+    <div class="recommand" style="width: 30%; min-width: 420px">
+      <app-user-card
+        title="招标人信息"
+        [user]="demand?.creator"
+      ></app-user-card>
+      <nz-divider></nz-divider>
+      <nz-card nzTitle="相似需求" [nzExtra]="moreDemand">
+        @for( demand of recommands.slice(0, 2); track demand) {
+        <app-demand-card [demand]="demand"></app-demand-card>
+        }@empty {<nz-empty
+          nzNotFoundContent="暂无相似需求"
+          style="margin: auto"
+        ></nz-empty
+        >}
+      </nz-card>
+    </div>
+  </div>
+</div>
+<ng-template #moreDemand>
+  <a [routerLink]="['/', 'home', 'demands']"> 更多需求>>></a>
+</ng-template>

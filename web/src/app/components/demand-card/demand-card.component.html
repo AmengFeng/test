@@ -1,0 +1,78 @@
+<nz-card
+  style="width: 100%; height: 100%; min-width: 400px"
+  [nzTitle]="demandTitle"
+  [nzExtra]="demandPrice"
+  nzHoverable
+  [nzActions]="
+    readOnly
+      ? [demandUser, demandLocation, statusTpl]
+      : [editTpl, deleteTpl, statusTpl]
+  "
+  (click)="toDetail()"
+>
+  <ng-template #demandPrice>
+    <span style="color: red; font-weight: bold">{{ demand.price }}</span>
+  </ng-template>
+  <ng-template #demandTitle>
+    <span [title]="demand.title">{{
+      demand.title.length > 12
+        ? demand.title.slice(0, 12) + "..."
+        : demand.title
+    }}</span>
+  </ng-template>
+  <ng-template #demandLocation>
+    <div nz-flex nzJustify="center" nzAlign="center" nzGap="0.5rem">
+      <span nz-icon nzType="environment"></span>
+      <span>{{ demand.creator?.location }}</span>
+    </div>
+  </ng-template>
+  <ng-template #demandUser>
+    <div
+      routerLink="/home/user/{{ demand.creator?.id }}"
+      (click)="$event.stopPropagation()"
+    >
+      <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
+      <nz-divider nzType="vertical"></nz-divider>
+      {{ demand.creator?.name }}
+    </div>
+  </ng-template>
+  <ng-template #statusTpl>
+    <div>
+      <span
+        nz-icon
+        nzType="check-circle"
+        [nzTheme]="demand.can_bid ? 'outline' : 'fill'"
+      ></span>
+      {{ demand.can_bid ? "未中标" : "已中标" }}
+    </div>
+  </ng-template>
+  <ng-template #editTpl>
+    <div (click)="update($event)">
+      <span nz-icon nzType="edit"></span>
+      <span>编辑</span>
+    </div>
+  </ng-template>
+  <ng-template #deleteTpl>
+    <div
+      (click)="$event.stopPropagation()"
+      nz-popconfirm
+      (nzOnConfirm)="delete()"
+      nzPopconfirmTitle="确认删除?"
+    >
+      <span nz-icon nzType="delete"></span>
+      <span>删除</span>
+    </div>
+  </ng-template>
+  <div style="height: 100%">
+    <!-- {{ readOnly }} -->
+    <p>{{ demand.brief }}</p>
+    <span nz-icon nzType="tags"></span>
+    标签： @for (tag of demand.tags; track $index) {
+    <nz-tag [nzColor]="tagColors[$index % tagColors.length]" nzMode="checkable">
+      {{ sliceTagName(tag) }}
+    </nz-tag>
+    }@empty {
+    <nz-tag>无标签</nz-tag>
+    }
+  </div>
+</nz-card>

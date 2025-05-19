@@ -1,0 +1,33 @@
+<nz-card nzTitle="我的收藏">
+  <nz-card-tab>
+    <nz-tabset nzSize="large" [(nzSelectedIndex)]="modeIndex">
+      <nz-tab [nzTitle]="demandTpl"></nz-tab>
+      <nz-tab [nzTitle]="videoTpl"></nz-tab>
+    </nz-tabset>
+  </nz-card-tab>
+  @if (modeIndex === 0) { @for (demand of demands; track demand) {
+  <app-demand-card [demand]="demand"></app-demand-card>
+  }@empty {
+  <nz-empty nzNotFoundContent="暂无需求" style="margin: auto"></nz-empty>
+  } } @else {
+  <div nz-flex nzWrap="wrap">
+    @for (video of videos; track video) {
+    <app-video-card
+      style="flex: 0 1 25%; padding: 7px; box-sizing: border-box"
+      [video]="video"
+    ></app-video-card>
+    }@empty {
+    <nz-empty nzNotFoundContent="暂无视频" style="margin: auto"></nz-empty>
+    }
+  </div>
+  }
+</nz-card>
+<ng-template #demandTpl>
+  <span nz-icon nzType="bulb"></span>
+  需求
+</ng-template>
+
+<ng-template #videoTpl>
+  <span nz-icon nzType="camera"></span>
+  视频
+</ng-template>

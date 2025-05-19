@@ -1,0 +1,54 @@
+<div class="container">
+  <nz-card style="text-align: center">
+    <form>
+      <nz-input-group
+        style="width: 80%"
+        class="searchBar"
+        nzSearch
+        nzSize="large"
+        [nzAddOnAfter]="suffixButton"
+      >
+        <input
+          type="text"
+          nz-input
+          [(ngModel)]="searchTerm"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="搜索视频"
+        />
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="large"
+          nzSearch
+          (click)="search()"
+        >
+          搜索
+        </button>
+      </ng-template>
+    </form>
+  </nz-card>
+  <nz-card>
+    <div nz-flex nzWrap="wrap">
+      @for (video of videos; track video) {
+      <app-video-card
+        style="flex: 0 1 33.3%; padding: 7px; box-sizing: border-box"
+        [video]="video"
+        [readOnly]="readOnly"
+      ></app-video-card>
+      }@empty {
+      <nz-empty nzNotFoundContent="暂无视频" style="margin: auto"></nz-empty>
+      }
+    </div>
+
+    <nz-pagination
+      [nzHideOnSinglePage]="true"
+      [(nzPageIndex)]="pageIndex"
+      nzPageSize="12"
+      [nzTotal]="videoCount"
+      (nzPageIndexChange)="getVideos()"
+      style="margin-top: 1rem"
+    ></nz-pagination>
+  </nz-card>
+</div>

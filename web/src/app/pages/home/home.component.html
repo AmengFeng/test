@@ -1,0 +1,70 @@
+<div class="container">
+  <header>
+    <div class="title" routerLink="/home">{{ title }}</div>
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/', 'home', 'index']">
+          <span nz-icon nzType="home"></span>
+          首页
+        </a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/', 'home', 'demands']">
+          <span nz-icon nzType="bulb"></span>
+          需求
+        </a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/', 'home', 'videos']">
+          <span nz-icon nzType="camera"></span>
+          视频
+        </a>
+      </li>
+    </ul>
+    @if (userId) {
+    <div class="publishBar">
+      <button nz-button nzGhost nzType="primary" (click)="publishDemand()">
+        <span nz-icon nzType="plus"></span>发布需求
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button nzGhost nzType="primary" (click)="uploadVideo()">
+        <span nz-icon nzType="upload"></span>上传视频
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+      欢迎您，{{ name }}
+      <nz-divider nzType="vertical"></nz-divider>
+      <nz-avatar
+        nzIcon="user"
+        (click)="toShell()"
+        style="cursor: pointer"
+      ></nz-avatar>
+    </div>
+    } @else {
+    <div class="loginBar">
+      <button
+        nz-button
+        nzType="primary"
+        nzGhost
+        nzShape="round"
+        (click)="toLogin()"
+      >
+        登录
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button
+        nz-button
+        nzType="primary"
+        nzGhost
+        nzShape="round"
+        (click)="toLogin()"
+      >
+        注册
+      </button>
+    </div>
+    }
+  </header>
+  <div style="width: 80%; min-width: 1350px; margin: auto">
+    <router-outlet></router-outlet>
+  </div>
+  <footer>{{ description }}</footer>
+</div>

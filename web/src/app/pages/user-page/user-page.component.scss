@@ -1,0 +1,22 @@
+.container {
+  min-width: 1350px;
+  margin: 20px auto;
+  background-color: #fff;
+}
+.bar {
+  height: 200px;
+  width: 100%;
+  background-image: url("/assets/user-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+.userInfo {
+  position: absolute;
+  bottom: 1rem;
+  left: 3rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: larger;
+}

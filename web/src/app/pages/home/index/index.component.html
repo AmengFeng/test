@@ -1,0 +1,71 @@
+<div class="adBar"></div>
+<div class="content">
+  <nz-input-group
+    class="searchBar"
+    nzSearch
+    nzSize="large"
+    [nzAddOnAfter]="suffixButton"
+    [nzAddOnBefore]="addOnBeforeTemplate"
+  >
+    <input
+      type="text"
+      nz-input
+      [(ngModel)]="searchTerm"
+      placeholder="搜索短视频/需求"
+    />
+  </nz-input-group>
+  <ng-template #addOnBeforeTemplate>
+    <nz-select [(ngModel)]="searchMode">
+      <nz-option nzLabel="短视频" nzValue="videos"></nz-option>
+      <nz-option nzLabel="需求" nzValue="demands"></nz-option>
+    </nz-select>
+  </ng-template>
+  <ng-template #suffixButton>
+    <button
+      nz-button
+      nzType="primary"
+      nzSize="large"
+      nzSearch
+      (click)="search()"
+    >
+      搜索
+    </button>
+  </ng-template>
+  <nz-carousel nzAutoPlay [nzAutoPlaySpeed]="5000">
+    @for (index of array; track index) {
+    <div nz-carousel-content>
+      <img src="/assets/joinus.jpg" alt="图片" draggable="false" />
+    </div>
+    }
+  </nz-carousel>
+  <nz-card style="width: 100%" [nzExtra]="moreDemand" nzTitle="最新需求">
+    <ng-template #moreDemand>
+      <a [routerLink]="['/', 'home', 'demands']"> 更多需求>>></a>
+    </ng-template>
+    <div nz-flex nzWrap="wrap">
+      @for (demand of demands; track demand) {
+      <app-demand-card
+        style="flex: 0 1 33.3%; padding: 7px; box-sizing: border-box"
+        [demand]="demand"
+      ></app-demand-card>
+      }@empty {
+      <nz-empty nzNotFoundContent="暂无需求" style="margin: auto"></nz-empty>
+      }
+    </div>
+  </nz-card>
+  <nz-card style="width: 100%" [nzExtra]="moreVideo" nzTitle="最新视频">
+    <ng-template #moreVideo>
+      <a [routerLink]="['/', 'home', 'videos']">更多视频>>></a>
+    </ng-template>
+    <div nz-flex nzWrap="wrap">
+      @for (video of videos; track video) {
+      <app-video-card
+        style="flex: 0 1 33.3%; padding: 7px; box-sizing: border-box"
+        [video]="video"
+      ></app-video-card>
+      }@empty {
+      <nz-empty nzNotFoundContent="暂无视频" style="margin: auto"></nz-empty>
+      }
+    </div>
+  </nz-card>
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="content-layout">
+    <div class="lang">
+      <button nz-button nzType="text">用户协议</button>
+      <button nz-button nzType="text">隐私政策</button>
+      <button nz-button nzType="text">帮助中心</button>
+      <!-- <i nz-icon nzTheme="outline" nzType="font-size"></i> -->
+    </div>
+    <div class="head">
+      <img class="logo" alt="" src="./assets/logo.png" />
+      <span class="title">{{ title }}</span>
+    </div>
+    <div class="desc">{{ description }}</div>
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">{{ footer }}</div>
+</div>

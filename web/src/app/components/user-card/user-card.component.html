@@ -1,0 +1,24 @@
+<nz-card [nzTitle]="title">
+  <div nz-flex [nzVertical]="true" nzGap="0.5rem">
+    <div
+      nz-flex
+      nzAlign="center"
+      routerLink="/home/user/{{ user?.id }}"
+      style="cursor: pointer"
+    >
+      <nz-avatar [nzSize]="48" nzIcon="user"></nz-avatar>
+      <nz-divider nzType="vertical"></nz-divider>
+      {{ user?.name }}
+    </div>
+    <div>
+      <span nz-icon nzType="edit" nzTheme="outline"></span>
+      <nz-divider nzType="vertical"></nz-divider>
+      {{ user?.description }}
+    </div>
+    <div>
+      <span nz-icon nzType="environment" nzTheme="outline"></span>
+      <nz-divider nzType="vertical"></nz-divider>
+      {{ user?.location }}
+    </div>
+  </div>
+</nz-card>

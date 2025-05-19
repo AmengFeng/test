@@ -1,0 +1,13 @@
+{
+  "serverUrl": "http://localhost:8000",
+  "menus": [
+    {
+      "url": "document",
+      "name": "报告查询"
+    },
+    {
+      "url": "log",
+      "name": "日志"
+    }
+  ]
+}

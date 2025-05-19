@@ -1,0 +1,93 @@
+<!-- <pre>{{ validateForm.value | json }}</pre> -->
+<!-- <pre>{{ coverFileLIst | json }}</pre> -->
+<form nz-form [formGroup]="validateForm" [nzAutoTips]="autoTips">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>应标视频</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <!-- <nz-select formControlName="video_id" nzPlaceHolder="请选择应标视频">
+        <nz-option
+          nzCustomContent
+          *ngFor="let video of videos"
+          [nzLabel]="video.title"
+          [nzValue]="video.id"
+          [nzDisabled]="!video?.can_bid"
+        >
+          <div nz-flex nzJustify="space-between">
+            {{ video.title }}
+            @if (video.can_bid) {
+            <nz-tag nzColor="success">可应标</nz-tag>
+            } @else {
+            <nz-tag>已应标</nz-tag>
+            }
+          </div>
+        </nz-option>
+      </nz-select> -->
+      <nz-upload
+        nzAction="{{ serverUrl }}/video/upload_file/"
+        nzListType="picture-card"
+        [(nzFileList)]="videoFileList"
+        (nzChange)="onChange($event, 'video_addr')"
+        nzAccept=".mp4"
+        [nzShowUploadList]="{
+          showPreviewIcon: false,
+          showDownloadIcon: false,
+          showRemoveIcon: true
+        }"
+        [nzShowButton]="videoFileList.length === 0"
+      >
+        <div>
+          <span nz-icon nzType="plus"></span>
+          <div style="margin-top: 8px">上传视频</div>
+        </div>
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>上传图片</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <nz-upload
+        nzAction="{{ serverUrl }}/video/upload_file/"
+        nzListType="picture-card"
+        [(nzFileList)]="coverFileList"
+        (nzChange)="onCoverChange($event)"
+        nzAccept="image/png, image/jpeg"
+        [nzShowUploadList]="{
+          showPreviewIcon: false,
+          showDownloadIcon: false,
+          showRemoveIcon: true
+        }"
+      >
+        <div>
+          <span nz-icon nzType="plus"></span>
+          <div style="margin-top: 8px">上传图片</div>
+        </div>
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>应标价格</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <nz-input-number-group nzAddOnAfter="￥">
+        <nz-input-number
+          formControlName="price"
+          placeholder="请输入应标价格"
+          [nzStep]="1"
+          [nzMin]="0"
+          [nzMax]="999999999"
+          [nzStep]="0.01"
+        ></nz-input-number>
+      </nz-input-number-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>备注</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
+      <textarea
+        nz-input
+        formControlName="description"
+        placeholder="请输入应标备注"
+        [nzAutosize]="{ minRows: 4 }"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>

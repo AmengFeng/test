@@ -1,0 +1,71 @@
+header {
+  height: 50px;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  min-width: 1000px;
+}
+
+.container {
+  // height: 100vh;
+  background-color: #fff7f7;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 1000px;
+  width: 80vw;
+  margin: auto;
+  padding: 20px 10px;
+  background-color: #fff;
+  gap: 20px;
+}
+
+.searchBar {
+  width: 70%;
+  margin: auto;
+}
+
+footer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loginBar,
+.publishBar {
+  margin-left: auto;
+  margin-right: 1.5rem;
+}
+
+.adBar {
+  height: 200px;
+  width: 100%;
+  background-image: url("/assets/杂志插图怒火.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.title {
+  color: #ff3b3b;
+  font-weight: bolder;
+  font-size: 1.5rem;
+  margin-left: 1.5rem;
+  cursor: pointer;
+}
+[nz-carousel-content] {
+  height: 240px;
+  line-height: 240px;
+  overflow: hidden;
+}
+
+[nz-carousel-content] img {
+  width: 100%; /* 让图片宽度充满容器 */
+  height: 100%; /* 让图片高度充满容器 */
+  object-fit: cover; /* 裁剪并覆盖区域，保持比例 */
+  object-position: center; /* 图片居中显示 */
+  cursor: pointer;
+}

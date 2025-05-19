@@ -1,0 +1,63 @@
+<nz-descriptions nzTitle="个人信息" [nzExtra]="extraTpl" nzBordered>
+  <nz-descriptions-item nzTitle="头像">
+    <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="姓名">
+    @if (isEditing) {
+    <input nz-input placeholder="请输入姓名" [(ngModel)]="user.name" />
+    }@else {
+    {{ user.name }}
+    }
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="性别">
+    @if (isEditing) {
+    <nz-select style="width: 100%" [(ngModel)]="user.gender">
+      <nz-option nzLabel="男" [nzValue]="1"></nz-option>
+      <nz-option nzLabel="女" [nzValue]="0"></nz-option>
+    </nz-select>
+    }@else { {{ ["女", "男"][user.gender] }} }
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="角色">
+    {{ user.role }}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="用户名">
+    {{ user.username }}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="密码">
+    @if (isEditing) {
+    <input
+      nz-input
+      placeholder="请输入姓名"
+      type="password"
+      [(ngModel)]="user.password"
+    />
+    }@else { ****** }
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="所在地">
+    @if (isEditing) {
+    <input nz-input placeholder="请输入所在地" [(ngModel)]="user.location" />
+    }@else {
+    {{ user.location }}
+    }
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="个人简介">
+    @if (isEditing) {
+    <input
+      nz-input
+      placeholder="请输入个人简介"
+      [(ngModel)]="user.description"
+    />
+    }@else {
+    {{ user.description }}
+    }
+  </nz-descriptions-item>
+</nz-descriptions>
+<ng-template #extraTpl>
+  @if (isEditing) {
+  <button nz-button nzType="primary" (click)="save()">保存</button>
+  <nz-divider nzType="vertical"></nz-divider>
+  <button nz-button nzType="primary" (click)="cancel()">取消</button>
+  } @else {
+  <button nz-button nzType="primary" (click)="isEditing = true">编辑</button>
+  }
+</ng-template>
